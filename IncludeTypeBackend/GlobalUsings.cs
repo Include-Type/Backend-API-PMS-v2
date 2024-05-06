@@ -3,6 +3,8 @@ global using System.Globalization;
 
 global using System.IdentityModel.Tokens.Jwt;
 
+global using Microsoft.AspNetCore.Mvc;
+
 global using Microsoft.Extensions.Options;
 
 global using Microsoft.EntityFrameworkCore;

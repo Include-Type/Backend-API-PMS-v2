@@ -27,14 +27,15 @@ public class PostgreSqlContext : DbContext
             entity.HasData(
                 new User
                 {
-                    Id = $"{Guid.NewGuid()}",
+                    Id = "1",
                     Password = HashPassword("1234567890"),
                     FirstName = "Subham",
                     LastName = "Karmakar",
                     Username = "SubhamK108",
                     Email = "subhamkarmakar0901@gmail.com",
                     IsAdmin = true
-                });
+                }
+            );
         });
 
         builder.Entity<UserVerification>(entity =>
@@ -49,6 +50,12 @@ public class PostgreSqlContext : DbContext
         builder.Entity<ProfessionalProfile>(entity =>
         {
             entity.HasKey(profile => profile.UserId);
+            entity.HasData(
+                new ProfessionalProfile
+                {
+                    UserId = "1"
+                }
+            );
             //entity
             //    .HasOne<User>(pp => pp.User)
             //    .WithOne(u => u.ProfessionalProfile)
@@ -58,6 +65,12 @@ public class PostgreSqlContext : DbContext
         builder.Entity<Privacy>(entity =>
         {
             entity.HasKey(privacy => privacy.UserId);
+            entity.HasData(
+                new Privacy
+                {
+                    UserId = "1"
+                }
+            );
             //entity
             //    .HasOne<User>(pr => pr.User)
             //    .WithOne(u => u.Privacy)

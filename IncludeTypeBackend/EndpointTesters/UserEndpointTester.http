@@ -1,0 +1,204 @@
+@IncludeTypeBackend_HostAddress = https://localhost:7028/api/user
+
+###
+
+GET {{IncludeTypeBackend_HostAddress}}/
+Accept: application/json
+
+###
+
+POST {{IncludeTypeBackend_HostAddress}}/adduser/
+Accept: application/json
+Content-Type: application/json
+
+{
+    "FirstName": "Subham",
+    "LastName": "Karmakar",
+    "Bio": "Admin of #include <TYPE>.",
+    "Username": "SubhamK108",
+    "Email": "demo@demo.com",
+    "Password": "1234567890",
+    "Address": "Rajarhat, Kolkata",
+    "Country": "India",
+    "City": "Kolkata",
+    "State": "West Bengal",
+    "Pincode": "700135",
+    "Contact": "1234567890",
+    "Picture": "",
+    "IsAdmin": true
+}
+
+###
+
+# @prompt username
+GET {{IncludeTypeBackend_HostAddress}}/getuser/{{username}}
+Accept: application/json
+
+###
+
+# @prompt userid
+GET {{IncludeTypeBackend_HostAddress}}/getuserprofessionalprofile/{{userid}}
+Accept: application/json
+
+###
+
+# @prompt userid
+GET {{IncludeTypeBackend_HostAddress}}/getuserprivacyprofile/{{userid}}
+Accept: application/json
+
+###
+
+# @prompt username
+PUT {{IncludeTypeBackend_HostAddress}}/updateuser/{{username}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "FirstName": "Subham",
+    "LastName": "Karmakar",
+    "Bio": "Admin of #include <TYPE>.",
+    "Username": "SubhamK108",
+    "Email": "include_type@outlook.com",
+    "Password": "1234567890",
+    "Address": "Rajarhat, Kolkata",
+    "Country": "India",
+    "City": "Kolkata",
+    "State": "West Bengal",
+    "Pincode": "700135",
+    "Contact": "1234567890",
+    "Picture": ""
+}
+
+###
+
+# @prompt username
+PUT {{IncludeTypeBackend_HostAddress}}/updateuserprofessionalprofile/{{username}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "Education": "B.Tech",
+    "Companies": "Capgemini",
+    "Skills": "",
+    "ExperienceYears": 1,
+    "ExperienceMonths": 0,
+    "Projects": ""
+}
+
+###
+
+# @prompt username
+PUT {{IncludeTypeBackend_HostAddress}}/updateuserprivacyprofile/{{username}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "Name": "Public",
+    "Bio": "Private",
+    "Picture": "Private",
+    "Email": "Private",
+    "Contact": "Private",
+    "Address": "Private",
+    "Education": "Private",
+    "Companies": "Private",
+    "Skills": "Private",
+    "Experience": "Private",
+    "Projects": "Private"
+}
+
+###
+
+# @prompt username
+DELETE {{IncludeTypeBackend_HostAddress}}/deleteuser/{{username}}
+Accept: application/json
+
+###
+
+# @prompt username
+GET {{IncludeTypeBackend_HostAddress}}/checkforuser/{{username}}
+Accept: application/json
+
+###
+
+# @prompt username
+# @prompt password 
+GET {{IncludeTypeBackend_HostAddress}}/checkpassword/{{username}}-{{password}}
+Accept: application/json
+
+###
+
+POST {{IncludeTypeBackend_HostAddress}}/register/
+Accept: application/json
+Content-Type: application/json
+
+{
+    "FirstName": "Demo 2",
+    "LastName": "Demo 2",
+    "Bio": "This is a demo user",
+    "Username": "Demo2",
+    "Email": "demo2@email.com",
+    "Password": "1234567890",
+    "Address": "Demo Address",
+    "Country": "Demo Country",
+    "City": "Demo City",
+    "State": "Demo State",
+    "Pincode": "Demo Pincode",
+    "Contact": "Demo Contact",
+    "Picture": ""
+}
+
+###
+
+# @prompt key Enter the Username or Email
+# @prompt password Enter the Password
+POST {{IncludeTypeBackend_HostAddress}}/login
+Accept: application/json
+Content-Type: application/json
+
+{
+    "Key": "{{key}}",
+    "Password": "{{password}}"
+}
+
+###
+
+GET {{IncludeTypeBackend_HostAddress}}/authenticateduser
+Accept: application/json
+
+###
+
+POST {{IncludeTypeBackend_HostAddress}}/logout
+Accept: application/json
+
+###
+
+GET {{IncludeTypeBackend_HostAddress}}/getallpendinguserverifications
+Accept: application/json
+
+###
+
+# @prompt email
+POST {{IncludeTypeBackend_HostAddress}}/requestpasswordreset
+Accept: application/json
+Content-Type: application/json
+
+{
+    "Email": "{{email}}"
+}
+
+###
+
+# @prompt userid
+# @prompt uniqueString
+# @prompt newPassword
+POST {{IncludeTypeBackend_HostAddress}}/authorizepasswordreset
+Accept: application/json
+Content-Type: application/json
+
+{
+    "UserId": "{{userid}}",
+    "UniqueString": "{{uniqueString}}",
+    "NewPassword": "{{newPassword}}"
+}
+
+###
