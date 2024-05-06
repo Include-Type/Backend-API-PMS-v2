@@ -27,20 +27,26 @@ public class UserService
     }
 
     public async Task<User> GetUserByIdAsync(string userId) =>
-        await _db.User.FirstOrDefaultAsync(user => user.Id == userId) ?? new();
+        await _db.User.FirstOrDefaultAsync(user => user.Id == userId)
+        ?? throw new Exception("User not found!");
 
     public async Task<User> GetUserAsync(string key) =>
-        await _db.User.FirstOrDefaultAsync(user => (user.Id == key || user.Email == key || user.Username == key)) ?? new();
+        await _db.User.FirstOrDefaultAsync(user => user.Id == key || user.Email == key || user.Username == key)
+        ?? throw new Exception("User not found!");
 
     public async Task<ProfessionalProfile> GetUserProfessionalProfileAsync(string userId) =>
-        await _db.ProfessionalProfile.FirstOrDefaultAsync(profile => profile.UserId == userId) ?? new();
+        await _db.ProfessionalProfile.FirstOrDefaultAsync(profile => profile.UserId == userId)
+        ?? throw new Exception("Professional Profile not found!");
 
     public async Task<Privacy> GetUserPrivacyProfileAsync(string userId) =>
-        await _db.Privacy.FirstOrDefaultAsync(privacy => privacy.UserId == userId) ?? new();
+        await _db.Privacy.FirstOrDefaultAsync(privacy => privacy.UserId == userId)
+        ?? throw new Exception("Privacy Profile not found!");
 
     public async Task<CompleteUserDto> GetCompleteUserAsync(string key)
     {
-        User user = await _db.User.FirstOrDefaultAsync(user => (user.Id == key || user.Email == key || user.Username == key)) ?? new();
+        User user = await _db.User.FirstOrDefaultAsync(
+            user => user.Id == key || user.Email == key || user.Username == key
+        ) ?? throw new Exception("User not found!");
         ProfessionalProfile professionalProfile = await GetUserProfessionalProfileAsync(user.Id);
         Privacy privacy = await GetUserPrivacyProfileAsync(user.Id);
         return new CompleteUserDto()
@@ -115,7 +121,7 @@ public class UserService
     public async Task DeletePendingUserVerificationAsync(string userId)
     {
         UserVerification userVerification = await GetPendingUserVerificationAsync(userId);
-        if (userVerification is not null)
+        if (!userVerification.UserId.Equals(""))
         {
             _db.UserVerification.Remove(userVerification);
         }
@@ -141,10 +147,7 @@ public class UserService
     public async Task UpdateUserPasswordAsync(string userId, string newPassword)
     {
         User user = await GetUserAsync(userId);
-        if (user is not null)
-        {
-            user.Password = HashPassword(newPassword);
-            await _db.SaveChangesAsync();
-        }
+        user.Password = HashPassword(newPassword);
+        await _db.SaveChangesAsync();
     }
 }
