@@ -5,7 +5,7 @@ public static class MapEndpoints
     public static void MapAllEndpoints(this WebApplication app)
     {
         RouteGroupBuilder endpoints = app.MapGroup("api");
-        endpoints
-            .MapUserEndpoints();
+        endpoints.MapUserEndpoints();
+        endpoints.MapProjectEndpoints();
     }
 }

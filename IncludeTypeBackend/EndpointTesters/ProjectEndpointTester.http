@@ -1,0 +1,92 @@
+@IncludeTypeBackend_HostAddress = https://localhost:7028/api/project
+
+###
+
+GET {{IncludeTypeBackend_HostAddress}}/getallprojects
+Accept: application/json
+
+###
+
+GET {{IncludeTypeBackend_HostAddress}}/gettotalprojects
+Accept: application/json
+
+###
+
+# @prompt username
+GET {{IncludeTypeBackend_HostAddress}}/getallprojectsbyusername/{{username}}
+Accept: application/json
+
+###
+
+# @prompt projectName
+# @prompt username
+GET {{IncludeTypeBackend_HostAddress}}/getprojectdetails/{{projectName}}&{{username}}
+Accept: application/json
+
+###
+
+# @prompt username
+# @prompt name
+# @prompt status
+# @prompt about
+# @prompt documentation
+POST {{IncludeTypeBackend_HostAddress}}/addproject/{{username}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "Name": "{{name}}",
+    "Status": "{{status}}",
+    "About": "{{about}}",
+    "Documentation": "{{documentation}}"
+}
+
+###
+
+# @prompt projName
+# @prompt name
+# @prompt status
+# @prompt about
+# @prompt documentation
+POST {{IncludeTypeBackend_HostAddress}}/updateproject/{{projName}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "Name": "{{name}}",
+    "Status": "{{status}}",
+    "About": "{{about}}",
+    "Documentation": "{{documentation}}"
+}
+
+###
+
+# @prompt projName Name of the project
+# @prompt name Name of the user
+# @prompt role
+# @prompt username
+POST {{IncludeTypeBackend_HostAddress}}/updateprojectmembers/{{projName}}
+Accept: application/json
+Content-Type: application/json
+
+[
+    {
+        "ProjName": "{{projName}}",
+        "Name": "Subham Karmakar",
+        "Role": "Admin",
+        "Username": "SubhamK108"
+    },
+    {
+        "ProjName": "{{projName}}",
+        "Name": "{{name}}",
+        "Role": "{{role}}",
+        "Username": "{{username}}"
+    }
+]
+
+###
+
+DELETE {{IncludeTypeBackend_HostAddress}}/deleteallterminatedprojects
+Accept: application/json
+
+###

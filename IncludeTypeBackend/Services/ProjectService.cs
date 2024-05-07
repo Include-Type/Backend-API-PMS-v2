@@ -16,24 +16,25 @@ public class ProjectService
 
     public async Task<List<Project>> GetAllProjectsByUsernameAsync(string username)
     {
-        List<ProjectMember> projectNames = await _db.ProjectMember
-                                                    .Where(member => member.Username.Equals(username))
-                                                    .ToListAsync();
+        List<string> projectNames = await _db.ProjectMember
+                                                .Where(member => member.Username.Equals(username))
+                                                .Select(member => member.ProjName)
+                                                .ToListAsync();
         List<Project> result = [];
-        foreach (ProjectMember member in projectNames)
+        foreach (string projectName in projectNames)
         {
-            Project? project = await _db.Project.FirstOrDefaultAsync(p => p.Name.Equals(member.ProjName));
+            Project? project = await _db.Project.FirstOrDefaultAsync(p => p.Name.Equals(projectName));
             if (project is not null)
             {
                 result.Add(project);
             }
         }
-
         return result;
     }
 
     public async Task<Project> GetProjectAsync(string key) =>
-        await _db.Project.FirstOrDefaultAsync(p => p.Id.Equals(key) || p.Name.Equals(key)) ?? new();
+        await _db.Project.FirstOrDefaultAsync(p => p.Id.Equals(key) || p.Name.Equals(key))
+        ?? throw new Exception("Project not found!");
 
     public async Task<List<ProjectMember>> GetAllProjectMembersAsync(string projectName) =>
         await _db.ProjectMember
@@ -47,13 +48,7 @@ public class ProjectService
             m.Username.Equals(username) &&
             m.Role.Equals("Admin")
         );
-
-        if (member is not null)
-        {
-            return true;
-        }
-
-        return false;
+        return member is not null;
     }
 
     public async Task<ProjectDetailsDto> GetProjectDetailsAsync(string projectName, string username)
@@ -64,29 +59,20 @@ public class ProjectService
             m.Username.Equals(username) &&
             m.Role.Equals("Admin")
         );
-
-        bool isAdmin;
-        if (adminMember is not null)
-        {
-            isAdmin = true;
-        }
-        else
-        {
-            isAdmin = false;
-        }
-
         return new ProjectDetailsDto()
         {
             Project = project,
             ProjectMembers = projectMembers,
-            IsAdmin = isAdmin
+            IsAdmin = adminMember is not null
         };
     }
 
     public async Task AddProjectAsync(Project project, string adminUsername)
     {
         await _db.Project.AddAsync(project);
-        User user = await _db.User.FirstOrDefaultAsync(u => u.Username.Equals(adminUsername)) ?? new();
+        User user = await _db.User.FirstOrDefaultAsync(u => u.Username.Equals(adminUsername))
+        ?? throw new Exception("User not found!");
+
         ProjectMember newAdminUser = new()
         {
             Id = $"{Guid.NewGuid()}",
@@ -109,21 +95,18 @@ public class ProjectService
                 projectMember.ProjName = updatedProject.Name;
             }
         }
-
-        existingProject.Id = updatedProject.Id;
-        existingProject.Date = updatedProject.Date;
+        // existingProject.Id = updatedProject.Id;
+        // existingProject.Date = updatedProject.Date;
         existingProject.Name = updatedProject.Name;
         existingProject.Status = updatedProject.Status;
         existingProject.About = updatedProject.About;
         existingProject.Documentation = updatedProject.Documentation;
-
         await _db.SaveChangesAsync();
     }
 
     public async Task UpdateProjectMembersAsync(string projectName, List<ProjectMember> projectMembers)
     {
         _db.ProjectMember.RemoveRange(await GetAllProjectMembersAsync(projectName));
-
         foreach (ProjectMember projectMember in projectMembers)
         {
             if (projectMember.Id.Length < 10)
@@ -131,10 +114,8 @@ public class ProjectService
                 Guid guid = Guid.NewGuid();
                 projectMember.Id = $"{guid}";
             }
-
             await _db.ProjectMember.AddAsync(projectMember);
         }
-
         await _db.SaveChangesAsync();
     }
 
