@@ -7,5 +7,6 @@ public static class MapEndpoints
         RouteGroupBuilder endpoints = app.MapGroup("api");
         endpoints.MapUserEndpoints();
         endpoints.MapProjectEndpoints();
+        endpoints.MapProjectTaskEndpoints();
     }
 }

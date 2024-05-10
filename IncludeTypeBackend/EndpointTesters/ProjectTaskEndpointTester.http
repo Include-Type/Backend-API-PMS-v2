@@ -1,0 +1,118 @@
+@IncludeTypeBackend_HostAddress = https://localhost:7028/api/projecttask
+
+###
+
+GET {{IncludeTypeBackend_HostAddress}}/gettasks
+Accept: application/json
+
+###
+
+GET {{IncludeTypeBackend_HostAddress}}/gettotaltasks
+Accept: application/json
+
+###
+
+# @prompt author
+GET {{IncludeTypeBackend_HostAddress}}/gettasksbyauthor/{{author}}
+Accept: application/json
+
+###
+
+# @prompt username
+GET {{IncludeTypeBackend_HostAddress}}/gettasksbyusername/{{username}}
+Accept: application/json
+
+###
+
+# @prompt author
+POST {{IncludeTypeBackend_HostAddress}}/updatetasksbyauthor/{{author}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "tasks": [
+        {
+            "projId": "36974559-f8d5-4c07-81db-aff9c56b4fc5",
+            "projName": "NewProject",
+            "title": "New Task",
+            "date": "May-02-2024",
+            "details": "This is a new task. \uD83D\uDD28",
+            "deadline": "May-09-2024",
+            "assigned": "SubhamK108",
+            "completed": true,
+            "priority": "High",
+            "author": "SubhamK108"
+        }
+    ]
+}
+
+###
+
+# @prompt username
+POST {{IncludeTypeBackend_HostAddress}}/updatetasksbyusername/{{username}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "tasks": [
+        {
+            "id": "1b3cb41a-c19f-42bf-921b-949a266fb372",
+            "projId": "36974559-f8d5-4c07-81db-aff9c56b4fc5",
+            "projName": "NewProject",
+            "title": "New Task",
+            "date": "May-02-2024",
+            "details": "This is a new task. \uD83D\uDD28",
+            "deadline": "May-09-2024",
+            "assigned": "SubhamK108",
+            "completed": true,
+            "priority": "High",
+            "author": "SubhamK108"
+        },
+        {
+            "id": "2c1fae23-074a-4868-bb3e-f57a0d199607",
+            "projId": "36974559-f8d5-4c07-81db-aff9c56b4fc5",
+            "projName": "NewProject",
+            "title": "New Task 2",
+            "date": "May-10-2024",
+            "details": "This is another new task.",
+            "deadline": "Aug-06-2024",
+            "assigned": "SubhamK108",
+            "completed": false,
+            "priority": "Medium",
+            "author": "SubhamK108"
+        }
+    ]
+}
+
+###
+
+# @prompt deadline
+GET {{IncludeTypeBackend_HostAddress}}/gettasksforgivendeadline/{{deadline}}
+Accept: application/json
+
+###
+
+# @prompt projId Project ID
+# @prompt projName Project Name
+# @prompt title Task Title
+# @prompt details Task Details
+# @prompt deadline Task Deadline
+# @prompt assigned Task Assigned To
+# @prompt priority Task Priority
+# @prompt author Task Author
+POST {{IncludeTypeBackend_HostAddress}}/addtask
+Accept: application/json
+Content-Type: application/json
+
+{
+    "projId": "{{projId}}",
+    "projName": "{{projName}}",
+    "title": "{{title}}",
+    "details": "{{details}}",
+    "deadline": "{{deadline}}",
+    "assigned": "{{assigned}}",
+    "priority": "{{priority}}",
+    "author": "{{author}}"
+}
+
+###
