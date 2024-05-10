@@ -10,7 +10,7 @@ public class ProjectIssue
     public string Details { get; set; } = "";
     public string Deadline { get; set; } = "";
     public string Assigned { get; set; } = "";
-    public bool Completed { get; set; }
+    public bool Completed { get; set; } = false;
     public string Priority { get; set; } = "";
     public string Author { get; set; } = "";
 

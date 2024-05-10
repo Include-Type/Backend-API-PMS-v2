@@ -3,13 +3,13 @@ global using System.Globalization;
 
 global using System.IdentityModel.Tokens.Jwt;
 
+global using Microsoft.IdentityModel.Tokens;
+
 global using Microsoft.AspNetCore.Mvc;
 
 global using Microsoft.Extensions.Options;
 
 global using Microsoft.EntityFrameworkCore;
-
-global using Microsoft.IdentityModel.Tokens;
 
 global using static BCrypt.Net.BCrypt;
 

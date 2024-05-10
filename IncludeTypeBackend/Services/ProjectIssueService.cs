@@ -8,21 +8,13 @@ public class ProjectIssueService
 
     public async Task<List<ProjectIssue>> GetAllIssuesAsync() => await _db.ProjectIssue.ToListAsync();
 
-    public async Task<int> GetTotalIssuesAsync()
-    {
-        List<ProjectIssue> projectIssue = await GetAllIssuesAsync();
-        return projectIssue.Count;
-    }
+    public async Task<int> GetTotalIssuesAsync() => (await GetAllIssuesAsync()).Count;
 
-    public async Task<List<ProjectIssue>> GetAllIssuesByAuthorAsync(string author)
-    {
-        return await _db.ProjectIssue.Where(issue => issue.Author.Equals(author)).ToListAsync();
-    }
+    public async Task<List<ProjectIssue>> GetAllIssuesByAuthorAsync(string author) =>
+        await _db.ProjectIssue.Where(issue => issue.Author.Equals(author)).ToListAsync();
 
-    public async Task<List<ProjectIssue>> GetAllIssuesByUsernameAsync(string username)
-    {
-        return await _db.ProjectIssue.Where(issue => issue.Assigned.Contains(username)).ToListAsync();
-    }
+    public async Task<List<ProjectIssue>> GetAllIssuesByUsernameAsync(string username) =>
+        await _db.ProjectIssue.Where(issue => issue.Assigned.Contains(username)).ToListAsync();
 
     public async Task UpdateAllIssuesByAuthorAsync(ProjectIssue[] projectIssues, string author)
     {
@@ -72,10 +64,8 @@ public class ProjectIssueService
         await _db.SaveChangesAsync();
     }
 
-    public async Task<List<ProjectIssue>> GetAllIssuesForGivenDeadlineAsync(string key)
-    {
-        return await _db.ProjectIssue.Where(issue => issue.Deadline.Equals(key)).ToListAsync();
-    }
+    public async Task<List<ProjectIssue>> GetAllIssuesForGivenDeadlineAsync(string key) =>
+        await _db.ProjectIssue.Where(issue => issue.Deadline.Equals(key)).ToListAsync();
 
     public async Task AddIssueAsync(ProjectIssue issue)
     {

@@ -8,5 +8,6 @@ public static class MapEndpoints
         endpoints.MapUserEndpoints();
         endpoints.MapProjectEndpoints();
         endpoints.MapProjectTaskEndpoints();
+        endpoints.MapProjectIssueEndpoints();
     }
 }
